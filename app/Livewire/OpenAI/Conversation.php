@@ -14,7 +14,7 @@ class Conversation extends Component
 
     public function boot(chatGPTService $chatGPTService)
     {
-        $this->transactions = ConversationModel::orderBy('id','asc')->take(10)->pluck('chat')->toArray();
+        $this->transactions = ConversationModel::orderBy('id','asc')->take(10)->pluck('chat')->toArray(); //getting last 10 record from database
         $this->chatGPTService = $chatGPTService;
     }
     public function render()
@@ -26,9 +26,9 @@ class Conversation extends Component
     {
         if (! empty($this->message)) {
             $response = $this->chatGPTService->communication($this->message);
-            $chat = ['request' => $this->message, 'response' => $response];
-            ConversationModel::insert(["chat"=>json_encode($chat)]);
-            $this->transactions[] = $chat;
+            $chat = ['request' => $this->message, 'response' => $response]; // request is user query and response is Bot response
+            ConversationModel::insert(["chat"=>json_encode($chat)]); // saving chat history
+            $this->transactions[] = $chat; // for showing to user latest request and response
             $this->message = '';
         }
     }
