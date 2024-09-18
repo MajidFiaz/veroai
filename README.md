@@ -13,3 +13,5 @@ After downloading this project run these command
 
 composer install
 php artisan migrate
+
+Sponsored By [IG Champ](https://igchamp.com).
